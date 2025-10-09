@@ -318,6 +318,11 @@ interface Config {
   github: Github;
 
   /**
+   * Custom name to display instead of GitHub profile name
+   */
+  customName?: string;
+
+  /**
    * Vite's base url
    */
   base?: string;

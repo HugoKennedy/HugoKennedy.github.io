@@ -126,6 +126,7 @@ export interface SanitizedThemeConfig {
 
 export interface SanitizedConfig {
   github: SanitizedGithub;
+  customName?: string;
   projects: SanitizedProjects;
   seo: SanitizedSEO;
   social: SanitizedSocial;
