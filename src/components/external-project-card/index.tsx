@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import LazyImage from '../lazy-image';
 import { MdOpenInNew } from 'react-icons/md';
 import { ga, skeleton } from '../../utils';
 import { SanitizedExternalProject } from '../../interfaces/sanitized-config';
@@ -32,15 +31,6 @@ const ExternalProjectCard = ({
                         className: 'mb-2 mx-auto',
                       })}
                     </h2>
-                    <div className="avatar w-full h-full">
-                      <div className="w-24 h-24 mask mask-squircle mx-auto">
-                        {skeleton({
-                          widthCls: 'w-full',
-                          heightCls: 'h-full',
-                          shape: '',
-                        })}
-                      </div>
-                    </div>
                     <div className="mt-2">
                       {skeleton({
                         widthCls: 'w-full',
@@ -97,24 +87,32 @@ const ExternalProjectCard = ({
                   <h2 className="font-medium text-center opacity-60 mb-2">
                     {item.title}
                   </h2>
-                  {item.imageUrl && (
-                    <div className="avatar opacity-90">
-                      <div className="w-24 h-24 mask mask-squircle">
-                        <LazyImage
-                          src={item.imageUrl}
-                          alt={'thumbnail'}
-                          placeholder={skeleton({
-                            widthCls: 'w-full',
-                            heightCls: 'h-full',
-                            shape: '',
-                          })}
-                        />
-                      </div>
-                    </div>
-                  )}
                   <p className="mt-2 text-base-content text-sm text-justify">
                     {item.description}
                   </p>
+                  <div className="mt-4">
+                    <button
+                      className="btn btn-outline btn-sm text-xs opacity-70"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        try {
+                          if (googleAnalyticId) {
+                            ga.event('Click External Project Button', {
+                              post: item.title,
+                            });
+                          }
+                        } catch (error) {
+                          console.error(error);
+                        }
+
+                        window?.open(item.link, '_blank');
+                      }}
+                    >
+                      View Project
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

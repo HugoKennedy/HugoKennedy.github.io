@@ -323,6 +323,24 @@ interface Config {
   customName?: string;
 
   /**
+   * Custom bio to display instead of GitHub profile bio
+   */
+  customBio?: string;
+
+  /**
+   * Custom location to display instead of GitHub profile location
+   */
+  customLocation?: string;
+
+  /**
+   * Custom project links to display as buttons
+   */
+  customProjectLinks?: Array<{
+    name: string;
+    url: string;
+  }>;
+
+  /**
    * Vite's base url
    */
   base?: string;

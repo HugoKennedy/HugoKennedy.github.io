@@ -107,8 +107,8 @@ const GitProfile = ({ config }: { config: Config }) => {
       setProfile({
         avatar: data.avatar_url,
         name: sanitizedConfig.customName || data.name || ' ',
-        bio: data.bio || '',
-        location: data.location || '',
+        bio: sanitizedConfig.customBio || data.bio || '',
+        location: sanitizedConfig.customLocation || data.location || '',
         company: data.company || '',
       });
 
@@ -202,7 +202,6 @@ const GitProfile = ({ config }: { config: Config }) => {
                   <AvatarCard
                     profile={profile}
                     loading={loading}
-                    avatarRing={sanitizedConfig.themeConfig.displayAvatarRing}
                     resumeFileUrl={sanitizedConfig.resume.fileUrl}
                   />
                   <DetailsCard
@@ -217,28 +216,44 @@ const GitProfile = ({ config }: { config: Config }) => {
                       skills={sanitizedConfig.skills}
                     />
                   )}
-                  {sanitizedConfig.experiences.length !== 0 && (
-                    <ExperienceCard
-                      loading={loading}
-                      experiences={sanitizedConfig.experiences}
-                    />
-                  )}
                   {sanitizedConfig.certifications.length !== 0 && (
                     <CertificationCard
                       loading={loading}
                       certifications={sanitizedConfig.certifications}
                     />
                   )}
-                  {sanitizedConfig.educations.length !== 0 && (
-                    <EducationCard
-                      loading={loading}
-                      educations={sanitizedConfig.educations}
-                    />
-                  )}
                 </div>
               </div>
               <div className="lg:col-span-2 col-span-1">
                 <div className="grid grid-cols-1 gap-6">
+                  {sanitizedConfig.experiences.length !== 0 && (
+                    <div className="w-full">
+                      <ExperienceCard
+                        loading={loading}
+                        experiences={sanitizedConfig.experiences}
+                      />
+                    </div>
+                  )}
+                  {sanitizedConfig.educations.length !== 0 && (
+                    <div className="w-full">
+                      <EducationCard
+                        loading={loading}
+                        educations={sanitizedConfig.educations}
+                      />
+                    </div>
+                  )}
+                  {sanitizedConfig.projects.external.projects.length !== 0 && (
+                    <div className="w-full">
+                      <ExternalProjectCard
+                        loading={loading}
+                        header={sanitizedConfig.projects.external.header}
+                        externalProjects={
+                          sanitizedConfig.projects.external.projects
+                        }
+                        googleAnalyticId={sanitizedConfig.googleAnalytics.id}
+                      />
+                    </div>
+                  )}
                   {sanitizedConfig.projects.github.display && (
                     <GithubProjectCard
                       header={sanitizedConfig.projects.github.header}
@@ -252,16 +267,6 @@ const GitProfile = ({ config }: { config: Config }) => {
                     <PublicationCard
                       loading={loading}
                       publications={sanitizedConfig.publications}
-                    />
-                  )}
-                  {sanitizedConfig.projects.external.projects.length !== 0 && (
-                    <ExternalProjectCard
-                      loading={loading}
-                      header={sanitizedConfig.projects.external.header}
-                      externalProjects={
-                        sanitizedConfig.projects.external.projects
-                      }
-                      googleAnalyticId={sanitizedConfig.googleAnalytics.id}
                     />
                   )}
                   {sanitizedConfig.blog.display && (
